@@ -8,12 +8,23 @@ Aim of the project is to get insights on the ingested covid data
 
 # TechStack Used
     - Nifi
-    - Kakka
+    - Kafka
     - PySpark
     - Hadoop
     - Airflow
     - Tableau
+    - Docker
+    - Amazon EC2
 
+# Steps of Execution:
+  1. Create AWS ec2 instance
+  2. Install docker and docker-compose on ec2 instance
+  3. Copy docker_exp to ec2 machine via scp or putty
+  4. Make necessary permission changes
+  5. Once inside the docker_exp , execute ./airflow.sh
+  6. Execute docker-compose up to download images and run the docker comtainers
+  7. Make necessary port forwarding for various running containers to access running services          on containers on local machine
+  
 # Approach
     1. Extract data from external source using API
     2. Process using Nifi

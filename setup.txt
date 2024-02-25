@@ -1,0 +1,32 @@
+## Connect to the instance using SSH
+ssh -i "D:\path\to\private\key.pem" user@Public_DNS
+Example: ssh -i "D:\Users\imran\Desktop\datapipeline.pem" ec2-user@ec2-34-235-133-172.compute-1.amazonaws.com
+
+## Install and setup Docker and Docker-compose
+
+1.	sudo yum update -y
+2.	sudo yum install docker
+3.	sudo curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+4.	sudo chmod +x /usr/local/bin/docker-compose
+5.	sudo gpasswd -a $USER docker
+6.	newgrp docker
+
+
+## Copy folder from local to ec2 and give required permissions
+scp -r -i "datapipelineineuron.pem" docker_exp ec2-user@ec2-65-0-80-189.ap-south-1.compute.amazonaws.com:/home/ec2-user/docker_exp
+sudo chmod -R 755 docker_exp
+
+## Change directory to docker_exp
+cd docker_exp
+
+## List files with permissions
+ls -l
+
+## Run shell script airflow_init.sh after starting the docker
+./airflow_init.sh
+
+## Downloading images and running the containers
+docker-compose up
+
+## Port Forwarding to access services locally
+ssh -i "datapipelineineuon.pem" ec2-user@ec2-43-205-195-57.ap-south-1.compute.amazonaws.com -o "ServerAliveInterval 30" -L 2081:localhost:2041 -L 4888:localhost:4888 -L 4889:localhost:4889 -L 2080:localhost:2080 -L 8050:localhost:8050 -L 8051:localhost:8051 -L 4141:localhost:4141 -L 4090:localhost:4090 -L 3180:localhost:3180 -L 50075:localhost:50075 -L 50070:localhost:50070 -L 50010:localhost:50010 -L 3077:localhost:3077 -L 4080:localhost:4080 -L 9870:localhost:9870 -L 8188:localhost:8188 -L 9864:localhost:9864 -L 8042:localhost:8042 -L 8088:localhost:8088 -L 8080:localhost:8080 -L 8081:localhost:8081 -L 10000:localhost:10000 -L 6080:localhost:6080 -L 8998:localhost:8998
